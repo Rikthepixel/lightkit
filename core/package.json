@@ -1,0 +1,25 @@
+{
+  "name": "@lightkit-ui/core",
+  "version": "0.0.0",
+  "description": "A lightweight component library making use of browser native elements",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "core",
+    "ui",
+    "lightkit",
+    "headless",
+    "minimal"
+  ],
+  "author": "Rikthepixel",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rikthepixel/lightkit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Rikthepixel/lightkit/issues"
+  },
+  "homepage": "https://github.com/Rikthepixel/lightkit#readme"
+}

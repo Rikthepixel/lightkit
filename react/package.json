@@ -1,0 +1,41 @@
+{
+  "name": "@lightkit-ui/react",
+  "version": "0.0.3",
+  "description": "A lightweight component library making use of browser native elements",
+  "main": "./lib/index.js",
+  "module": "./lib/index.mjs",
+  "types": "./lib/index.d.ts",
+  "scripts": {
+    "build": "tsup"
+  },
+  "peerDependencies": {
+    "react": ">= 16",
+    "react-dom": ">= 16"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.12",
+    "react": "^18.2.0",
+    "tsup": "^7.0.0",
+    "typescript": "^5.1.3"
+  },
+  "keywords": [
+    "react",
+    "ui",
+    "lightkit",
+    "headless",
+    "minimal"
+  ],
+  "author": "Rikthepixel",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rikthepixel/lightkit.git"
+  },
+  "files": [
+    "lib"
+  ],
+  "bugs": {
+    "url": "https://github.com/Rikthepixel/lightkit/issues"
+  },
+  "homepage": "https://github.com/Rikthepixel/lightkit#readme"
+}
