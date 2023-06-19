@@ -23,5 +23,8 @@
     "url": "https://github.com/Rikthepixel/lightkit/issues"
   },
   "homepage": "https://github.com/Rikthepixel/lightkit/blob/main/packages/core/README.md",
-  "gitHead": "8f065e471c5e0290e845551e0e2901ef4dc562e8"
+  "gitHead": "b8a578149a4f06ca74c121701008bc117d45749a",
+  "publishConfig": {
+    "access": "public"
+  }
 }
