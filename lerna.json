@@ -10,5 +10,6 @@
     },
     "publish": {}
   },
+  "npmClient": "npm",
   "access": "public"
 }
