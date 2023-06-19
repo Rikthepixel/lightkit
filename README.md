@@ -1,3 +1,3 @@
 # Minkit
 
-A lightweight component library making use of browser native elements
+A lightweight UI library making use of browser native elements.

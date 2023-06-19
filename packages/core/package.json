@@ -1,14 +1,14 @@
 {
   "name": "@minkit/core",
   "version": "0.0.0",
-  "description": "A lightweight component library making use of browser native elements",
+  "description": "A lightweight UI library making use of browser native elements",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "core",
     "ui",
-    "lightkit",
+    "minkit",
     "headless",
     "minimal"
   ],
@@ -17,12 +17,12 @@
   "private": false,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Rikthepixel/lightkit.git"
+    "url": "git+https://github.com/Rikthepixel/minkit.git"
   },
   "bugs": {
-    "url": "https://github.com/Rikthepixel/lightkit/issues"
+    "url": "https://github.com/Rikthepixel/minkit/issues"
   },
-  "homepage": "https://github.com/Rikthepixel/lightkit/blob/main/packages/core/README.md",
+  "homepage": "https://github.com/Rikthepixel/minkit/blob/main/packages/core/README.md",
   "gitHead": "06418545a1ffb419c44231684ab959f255cca0fc",
   "publishConfig": {
     "access": "public"

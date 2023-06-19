@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "outDir": "lib",
+        "module": "ESNext",
+        "declaration": true,
+        "moduleResolution": "node",
+        "jsx": "preserve",
+        "strict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "strictNullChecks": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true
+    },
+    "include": [
+        "src"
+    ],
+    "exclude": [
+        "node_modules",
+        "lib"
+    ]
+}

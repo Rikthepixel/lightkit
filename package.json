@@ -1,6 +1,7 @@
 {
   "name": "root",
   "private": true,
+  "description": "A lightweight UI library making use of browser native elements",
   "scripts": {
     "setup": "npm i -ws && npm i",
     "build:react": "npm run build -w packages/react",
