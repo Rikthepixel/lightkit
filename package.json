@@ -1,1 +1,17 @@
-{}
+{
+  "private": false,
+  "scripts": {
+    "setup": "npm i -ws && npm i",
+    "build:react": "npm run build -w packages/react",
+    "build:core": "npm run build -w packages/core",
+    "build:all": "npm run build -ws --if-present",
+    "release:publish":"lerna publish from-package"
+  },
+  "workspaces": [
+    "./packages/*"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "lerna": "^7.0.2"
+  }
+}
