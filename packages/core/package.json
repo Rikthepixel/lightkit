@@ -1,5 +1,5 @@
 {
-  "name": "@lightkit-ui/core",
+  "name": "@minkit/core",
   "version": "0.0.0",
   "description": "A lightweight component library making use of browser native elements",
   "scripts": {
@@ -23,7 +23,7 @@
     "url": "https://github.com/Rikthepixel/lightkit/issues"
   },
   "homepage": "https://github.com/Rikthepixel/lightkit/blob/main/packages/core/README.md",
-  "gitHead": "b8a578149a4f06ca74c121701008bc117d45749a",
+  "gitHead": "06418545a1ffb419c44231684ab959f255cca0fc",
   "publishConfig": {
     "access": "public"
   }
