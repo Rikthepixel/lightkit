@@ -8,8 +8,7 @@
     "version": {
       "allowBranch": "main"
     },
-    "publish": {
-      
-    }
-  }
+    "publish": {}
+  },
+  "access": "public"
 }

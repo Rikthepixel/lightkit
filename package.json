@@ -1,5 +1,5 @@
 {
-  "private": false,
+  "private": true,
   "scripts": {
     "setup": "npm i -ws && npm i",
     "build:react": "npm run build -w packages/react",
