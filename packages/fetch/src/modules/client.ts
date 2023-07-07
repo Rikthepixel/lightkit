@@ -138,6 +138,7 @@ export class MinFetch<TRegister extends HandlerRegisterAny = HandlerRegisterDefa
         return new MinFetch({
             baseUrl: this._request_url,
             register: this._register.copy(),
+            requestOptions: this._request_options
         });
     }
 
