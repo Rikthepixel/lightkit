@@ -14,14 +14,12 @@ import { MaybePromise, SetRequired } from "../types/utils";
  * @template TRegister
  */
 export interface MinFetchOptions<TRegister extends HandlerRegisterAny = HandlerRegisterDefault> {
-    /**
-     * The initial base url that the client will sent its requests to
-     */
+    /** The initial base url that the client will sent its requests to */
     baseUrl?: string;
-    /**
-     * HandlerRegister object containing the parsers that will be applied
-     */
+    /** HandlerRegister object containing the parsers that will be applied */
     register?: TRegister;
+    /** The base options to apply to the eventual fetch request */
+    requestOptions?: MinFetchRequestOptions;
 }
 
 /**
@@ -47,32 +45,36 @@ export class MinFetch<TRegister extends HandlerRegisterAny = HandlerRegisterDefa
      * MinFetchRequestOptions that will later be transformed to the browser native fetch options
      * @private
      */
-    private _request_options: MinFetchRequestOptions & SetRequired<MinFetchRequestOptions, "headers"> = {
-        headers: {}
-    };
+    private _request_options: SetRequired<MinFetchRequestOptions, "headers">;
 
     /**
      * Creates an instance of MinFetch.
      * @constructor
      */
     constructor(options: MinFetchOptions<TRegister> = {}) {
-        const { baseUrl, register: flow } = Object.assign({
+        const { baseUrl, register, requestOptions } = Object.assign({
             baseUrl: "",
-            register: new HandlerRegister
+            register: new HandlerRegister,
+            requestOptions: {
+                headers: {}
+            }
         } as Required<MinFetchOptions>, options);
 
+        requestOptions.headers ??= {};
+
         this._request_url = baseUrl;
-        this._register = flow;
+        this._register = register;
+        this._request_options = requestOptions as SetRequired<MinFetchRequestOptions, "headers">;
     }
 
     /**
      * Adds a AbortSignal to the request options to possibly cancel
      * 
-     * @param signal An AbortSignal or AbortController to cancel the request
+     * @param signal An AbortSignal to cancel the request
      * @returns this
      */
-    abort(signal?: AbortSignal | AbortController) {
-        this._request_options.signal = signal instanceof AbortController ? signal.signal : signal;
+    abort(signal?: AbortSignal) {
+        this._request_options.signal = signal;
         return this;
     }
 
@@ -110,22 +112,8 @@ export class MinFetch<TRegister extends HandlerRegisterAny = HandlerRegisterDefa
         this._request_options.headers[CONTENT_TYPE_HEADER] = value;
         return this;
     }
-
     /**
-     * 
-     *
-     * @template TStatusCode
-     * @template TResult
-     * @param code
-     * @param catcher
-     * @returns this
-     */
-    status<TStatusCode extends HttpStatusCode, TResult>(code: TStatusCode, catcher: ResponseParser<TResult, TStatusCode>): MinFetch<SetParsedCode<TRegister, TStatusCode, TResult>> {
-        this._register.parsers.set(code, catcher as ResponseParser<TResult, HttpStatusCode>);
-        return this as MinFetch<SetParsedCode<TRegister, TStatusCode, TResult>>;
-    }
-
-    /**
+     * Appends the given url path to the current url
      * 
      * @param url The url/path you want to add to the current url
      * @param override wether to override the current url or to keep it
@@ -149,13 +137,47 @@ export class MinFetch<TRegister extends HandlerRegisterAny = HandlerRegisterDefa
     copy() {
         return new MinFetch({
             baseUrl: this._request_url,
-            register: this._register.copy()
+            register: this._register.copy(),
         });
-    }/**
-     * Description placeholder
-     * @date 7/6/2023 - 6:01:38 PM
+    }
+
+    getUrl() {
+        return this._request_url;
+    }
+
+    applyOptions(options: Partial<MinFetchRequestOptions>) {
+        const headers = Object.assign({}, this._request_options, options.headers);
+        this._request_options = Object.assign({}, this._request_options, options);
+        this._request_options.headers = headers;
+        return this;
+    }
+
+    getOptions() {
+        return this._request_options;
+    }
+
+    applyHeaders(headersToChange: Record<string, string | undefined>) {
+        this._request_options.headers = Object.assign({}, this._request_options.headers, headersToChange);
+        return this;
+    }
+
+    getHeaders() {
+        return this._request_options.headers;
+    }
+
+    /**
+     * 
+     *
+     * @template TStatusCode
+     * @template TResult
+     * @param code
+     * @param catcher
+     * @returns this
      */
-    ;
+    status<TStatusCode extends HttpStatusCode, TResult>(code: TStatusCode, catcher: ResponseParser<TResult, TStatusCode>): MinFetch<SetParsedCode<TRegister, TStatusCode, TResult>> {
+        this._register.parsers.set(code, catcher as ResponseParser<TResult, HttpStatusCode>);
+        return this as MinFetch<SetParsedCode<TRegister, TStatusCode, TResult>>;
+    }
 
     /**
      * Send a request using the provided http method to the server.
