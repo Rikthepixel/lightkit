@@ -1,18 +1,20 @@
 {
   "name": "root",
   "private": true,
-  "description": "A lightweight UI library making use of browser native elements",
+  "description": "A lightweight app making kit making use of browser native elements",
   "scripts": {
     "setup": "npm i -ws && npm i",
     "build:react": "npm run build -w packages/react",
+    "build:fetch": "npm run build -w packages/fetch",
     "build:core": "npm run build -w packages/core",
     "build:all": "npm run build -ws --if-present",
+    "watch:fetch": "npm run watch -w packages/fetch",
+    "test:fetch": "npm run test -w packages/fetch",
     "release:publish": "lerna publish from-package"
   },
   "workspaces": [
     "./packages/*"
   ],
-  "dependencies": {},
   "devDependencies": {
     "lerna": "^7.0.2"
   }
