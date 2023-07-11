@@ -3,6 +3,7 @@
         "outDir": "lib",
         "lib": [
             "DOM",
+            "DOM.Iterable",
             "ES2015",
             "ES2015.Promise",
         ],
@@ -22,7 +23,7 @@
     "include": [
         "src",
         "tests"
-    ],
+, "tests/fetch-setup.ts"    ],
     "exclude": [
         "node_modules",
         "coverage",

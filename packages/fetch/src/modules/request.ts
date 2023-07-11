@@ -46,7 +46,7 @@ export interface MinFetchRequestOptions {
 
 export interface MinPreparedFetchRequestOptions extends SetRequired<Omit<MinFetchRequestOptions, "headers">, "method"> {
     url: string | URL;
-    headers: Record<string, string>;
+    headers: Record<string, string | undefined>;
 }
 
 //
@@ -78,8 +78,9 @@ export type MimeTypeValue = (string & {}) | "*/*" | `${MimeBaseType}/*` | MimeBa
 export type AcceptHeaderValue = MimeTypeValue;
 export type ContentTypeHeaderValue = MimeTypeValue;
 
-export const shouldBecomeJson = (body: RequestBody | undefined | null): body is Record<string, any> => {
+export const shouldBecomeJson = (body: RequestBody | undefined | null, contentType?: ContentTypeHeaderValue): body is Record<string, any> => {
     return (
+        contentType === "application/json" &&
         !!body &&
         typeof body !== "string" &&
         !(body instanceof ReadableStream) &&
@@ -91,7 +92,7 @@ export const shouldBecomeJson = (body: RequestBody | undefined | null): body is 
     );
 };
 
-export const prepareFetchHeaders = (headers: Record<string, string | undefined>) => {
+export const castFetchHeaders = (headers: Record<string, string | undefined>) => {
     if (headers[CONTENT_TYPE_HEADER] === MULTIPART_CONTENT_TYPE) {
         delete headers[CONTENT_TYPE_HEADER];
     }
@@ -109,14 +110,14 @@ export const prepareFetchOptions = (
         ...options,
         url: url,
         method: method,
-        headers: headers ? prepareFetchHeaders({ ...storedHeaders, ...headers }) : {}
+        headers: headers ?? {}
     };
 };
 
 export const castFetchOptions = (options: MinPreparedFetchRequestOptions): RequestInit => {
-
     return {
         ...options,
-        body: shouldBecomeJson(options.body) ? JSON.stringify(options.body as Record<string, any>) : options.body,
+        body: shouldBecomeJson(options.body, options.headers[CONTENT_TYPE_HEADER]) ? JSON.stringify(options.body as Record<string, any>) : options.body,
+        headers: castFetchHeaders(options.headers)
     };
 };

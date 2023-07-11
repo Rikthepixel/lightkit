@@ -138,7 +138,7 @@ export class MinFetch<TRegister extends HandlerRegisterAny = HandlerRegisterDefa
         return new MinFetch({
             baseUrl: this._request_url,
             register: this._register.copy(),
-            requestOptions: this._request_options
+            requestOptions: structuredClone(this._request_options)
         });
     }
 
@@ -147,7 +147,7 @@ export class MinFetch<TRegister extends HandlerRegisterAny = HandlerRegisterDefa
     }
 
     applyOptions(options: Partial<MinFetchRequestOptions>) {
-        const headers = Object.assign({}, this._request_options, options.headers);
+        const headers = Object.assign({}, this._request_options.headers, options.headers);
         this._request_options = Object.assign({}, this._request_options, options);
         this._request_options.headers = headers;
         return this;
@@ -372,6 +372,13 @@ export class MinFetchQuery<TRegister extends HandlerRegisterAny = HandlerRegiste
                 const parser = this._register.parsers.get(response.code) ?? this._register.globalParser;
                 return (parser ? await parser(response) : response) as TRegister["_output"];
             });
+    }
+
+    /**
+     * Returns the prepared requestoptions used in the fetch query
+     */
+    getOptions() {
+        return this._request_options
     }
 
     /**
