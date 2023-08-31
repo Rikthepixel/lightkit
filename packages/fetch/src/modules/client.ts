@@ -67,6 +67,10 @@ export class MinFetch<TRegister extends HandlerRegisterAny = HandlerRegisterDefa
         this._request_options = requestOptions as SetRequired<MinFetchRequestOptions, "headers">;
     }
 
+    get [Symbol.toStringTag]() {
+        return "MinFetch";
+    }
+
     /**
      * Adds a AbortSignal to the request options to possibly cancel
      * 
@@ -175,9 +179,9 @@ export class MinFetch<TRegister extends HandlerRegisterAny = HandlerRegisterDefa
      * @param catcher
      * @returns this
      */
-    status<TStatusCode extends HttpStatusCode, TResult>(code: TStatusCode, catcher: ResponseParser<TResult, TStatusCode>): MinFetch<SetParsedCode<TRegister, TStatusCode, TResult>> {
+    status<TStatusCode extends HttpStatusCode, TResult>(code: TStatusCode, catcher: ResponseParser<TResult, TStatusCode>): MinFetch<SetParsedCode<TRegister, TStatusCode, TResult>["_self"]> {
         this._register.parsers.set(code, catcher as ResponseParser<TResult, HttpStatusCode>);
-        return this as MinFetch<SetParsedCode<TRegister, TStatusCode, TResult>>;
+        return this;
     }
 
     /**
@@ -355,10 +359,10 @@ export class MinFetchQuery<TRegister extends HandlerRegisterAny = HandlerRegiste
     }
 
     get [Symbol.toStringTag]() {
-        return "FetchQueryPromise";
+        return "MinFetchQuery";
     }
 
-    get [Symbol.species]() {
+    static get [Symbol.species]() {
         return Promise;
     }
 
@@ -375,10 +379,17 @@ export class MinFetchQuery<TRegister extends HandlerRegisterAny = HandlerRegiste
     }
 
     /**
-     * Returns the prepared requestoptions used in the fetch query
+     * Returns the prepared requestoptions used in the request
      */
     getOptions() {
-        return this._request_options
+        return this._request_options;
+    }
+
+    /**
+     * Returns the headers used while sending the request
+     */
+    getHeaders() {
+        return this._request_options.headers;
     }
 
     /**
@@ -388,7 +399,7 @@ export class MinFetchQuery<TRegister extends HandlerRegisterAny = HandlerRegiste
      */
     copy() {
         return new MinFetchQuery({
-            requestOptions: this._request_options,
+            requestOptions: structuredClone(this._request_options),
             response: this._response,
             register: this._register.copy()
         });

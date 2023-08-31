@@ -1,6 +1,6 @@
 import { HttpStatusCode, MinFetchResponse, ResponseParser } from "./response";
 
-export class HandlerRegister<TTypeMap extends RegisterTypeMap<any, any> = RegisterTypeMap<any, any>> {
+export class HandlerRegister<TTypeMap extends RegisterTypeMap<any, any> = RegisterTypeMap<{}, MinFetchResponse<HttpStatusCode>>> {
     readonly _self!: HandlerRegister<TTypeMap>;
     readonly _typeMap!: TTypeMap;
     readonly _output!: TTypeMap["parsed"][keyof TTypeMap["parsed"]] | TTypeMap["globalParsed"];
